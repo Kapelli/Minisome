@@ -1,9 +1,8 @@
-
 <?php
 
 include 'database.php';
 
-echo "Tietokantayhteys muodostettu onnistuneesti." . "<br>";
+// echo "Tietokantayhteys muodostettu onnistuneesti." . "<br>";
 
 $sql = "SELECT * FROM posts";
 $result = mysqli_query($conn, $sql);
@@ -12,6 +11,7 @@ $result = mysqli_query($conn, $sql);
 
 <!DOCTYPE html>
 <html lang="fi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,30 +21,49 @@ $result = mysqli_query($conn, $sql);
 
 <body>
 
-<div class="postaukset">
+    <div class="layout">
 
-    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+        <aside>
+            <img src="logo.png" alt="LOGO">
+        </aside>
 
-        <div class="post">
-
-            <div class="tekija">
-                <?php echo $row['author']; ?>
+        <div class="some">
+            <nav>
+                <a href="#">Sinulle</a>
+                <a href="#">Seuratut</a>
+            </nav>
+            <div class="omapost">
+                <textarea name="content" placeholder="Mitä mielessä?"></textarea>
+                <button type="submit">Julkaise</button>
             </div>
 
-            <div class="sisalto">
-                <?php echo $row['content']; ?>
-            </div>
+            <div class="postaukset">
 
-            <div class="julkaisuaika">
-                <?php echo $row['created_at']; ?>
-            </div>
+                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
 
+                <div class="post">
+
+                    <div class="tekija">
+                        <?php echo $row['author']; ?>
+                    </div>
+
+                    <div class="sisalto">
+                        <?php echo $row['content']; ?>
+                    </div>
+
+                    <div class="julkaisuaika">
+                        <?php echo $row['created_at']; ?>
+                    </div>
+
+                </div>
+
+                <?php } ?>
+
+            </div>
         </div>
 
-    <?php } ?>
-
-</div>
+    </div>
 
 </body>
-</html>
 
+</html>

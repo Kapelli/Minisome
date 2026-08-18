@@ -39,20 +39,31 @@ body {
     border-bottom: 1px solid #333;
 }
 
-.omapost {
+.add-post {
+    padding: 30px;
+}
+
+.add-post h1 {
+    margin: 0 0 30px 0;
+    font-size: 1.8rem;
+}
+
+.add-post form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 100%;
-    padding: 20px;
-    border-bottom: 1px solid #333;
 }
 
-.omapost textarea {
+.add-post label {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.add-post input,
+.add-post textarea {
     width: 100%;
-    min-height: 80px;
     padding: 12px;
-    resize: vertical;
 
     background-color: #1a1a1a;
     color: white;
@@ -65,18 +76,26 @@ body {
     outline: none;
 }
 
-.omapost textarea::placeholder {
-    color: #777;
-}
-
-.omapost textarea:focus {
+.add-post input:focus,
+.add-post textarea:focus {
     border-color: #666;
 }
 
-.omapost button {
+.add-post input::placeholder,
+.add-post textarea::placeholder {
+    color: #777;
+}
+
+.add-post textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.add-post button {
     align-self: flex-end;
 
-    padding: 8px 18px;
+    margin-top: 10px;
+    padding: 10px 20px;
 
     background-color: white;
     color: black;
@@ -87,6 +106,34 @@ body {
     font-size: 0.9rem;
     font-weight: bold;
 
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-post button:hover {
+    background-color: #ccc;
+}
+
+.message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    color: #aaa;
+}
+
+.omapost button {
+    align-self: flex-end;
+    padding: 8px 18px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -133,4 +180,21 @@ aside {
 aside img {
     width: 100px;
     height: auto;
+    border: 1px white;
+}
+
+.lisaa-postaus {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+}
+.lisaa-post{
+     border-bottom: 1px solid #333;
+     padding: 20px;
 }

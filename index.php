@@ -2,6 +2,27 @@
 
 include 'database.php';
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $content = trim($_POST["content"]);
+
+    if (empty($content)) {
+        echo "Kirjoita jotain ennen julkaisemista.";
+    } else {
+
+        $author = "#";
+
+        $sql = "INSERT INTO posts (author, content, created_at)
+            VALUES ('$author', '$content', NOW())";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "Postaus lisätty onnistuneesti.";
+        } else {
+            echo "Postauksen lisääminen epäonnistui.";
+        }
+    }
+}
+
 // echo "Tietokantayhteys muodostettu onnistuneesti." . "<br>";
 
 $sql = "SELECT * FROM posts";
@@ -29,14 +50,12 @@ $result = mysqli_query($conn, $sql);
 
         <div class="some">
             <nav>
-                <a href="#">Sinulle</a>
-                <a href="#">Seuratut</a>
+                <a href="index.php">Sinulle</a>
+                <a href="add_post.php">Lisää Julkaisu</a>
             </nav>
-            <div class="omapost">
-                <textarea name="content" placeholder="Mitä mielessä?"></textarea>
-                <button type="submit">Julkaise</button>
+            <div class="lisaa-post">
+                <a href="add_post.php" class="lisaa-postaus">+ Lisää julkaisu</a>
             </div>
-
             <div class="postaukset">
 
                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
@@ -44,12 +63,13 @@ $result = mysqli_query($conn, $sql);
                 <div class="post">
 
                     <div class="tekija">
-                        <?php echo $row['author']; ?>
+                        <?php echo htmlspecialchars($row['author']); ?>
                     </div>
 
                     <div class="sisalto">
-                        <?php echo $row['content']; ?>
+                        <?php echo htmlspecialchars($row['content']); ?>
                     </div>
+
 
                     <div class="julkaisuaika">
                         <?php echo $row['created_at']; ?>

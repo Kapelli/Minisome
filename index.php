@@ -70,13 +70,18 @@ $result = mysqli_query($conn, $sql);
             <?php echo htmlspecialchars($row['content']); ?>
         </div>
 
-        <div class="julkaisuaika">
-            <?php echo $row['created_at']; ?>
-        </div>
+<div class="post-footer">
+    <div class="julkaisuaika">
+        <?php echo $row['created_at']; ?>
+    </div>
 
+    <div class="muokkaa">
         <a href="edit_post.php?id=<?php echo $row['id']; ?>">
             Muokkaa
         </a>
+    </div>
+</div>
+
 
     </div>
 

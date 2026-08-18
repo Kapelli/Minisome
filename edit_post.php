@@ -15,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = trim($_POST["content"]);
 
     if (empty($author) || empty($content)) {
-
         $message = "Täytä kaikki kentät.";
+        $message_class = "Epaonnstui_message";
 
     } else {
 
@@ -25,11 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             content = '$content'
         WHERE id = $id";
 
-if (mysqli_query($conn, $sql)) {
-    $message = "Julkaisu päivitettiin onnistuneesti.";
-} else {
-    $message = "Julkaisun päivittäminen epäonnistui.";
-}
+        if (mysqli_query($conn, $sql)) {
+            $message = "Julkaisu päivitettiin onnistuneesti.";
+            $message_class = "Onnstui_message";
+
+        } else {
+            $message = "Julkaisun päivittäminen epäonnistui.";
+            $message_class = "Epaonnstui_message";
+        }
     }
 }
 ?>
@@ -60,12 +63,11 @@ if (mysqli_query($conn, $sql)) {
             <div class="add-post">
 
                 <h1>Muokkaa julkaisu</h1>
-
-                <?php if (!empty($message)) { ?>
-                    <div class="message">
-                        <?php echo $message; ?>
-                    </div>
-                <?php } ?>
+<?php if (!empty($message)) { ?>
+    <div class="<?php echo $message_class; ?>">
+        <?php echo $message; ?>
+    </div>
+<?php } ?>
 
                 <form method="POST">
 

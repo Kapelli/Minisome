@@ -150,7 +150,7 @@ body {
     overflow-wrap: anywhere;
 }
 
-.julkaisuaika {
+julkaisuaika {
     font-size: 0.8rem;
     color: #888;
     border-top: 1px solid #333;
@@ -197,4 +197,28 @@ aside img {
 .lisaa-post{
      border-bottom: 1px solid #333;
      padding: 20px;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+.julkaisuaika {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.muokkaa a {
+    font-size: 0.8rem;
+    color: #d8d8d8;
+}
+.Onnstui_message{
+    color: rgb(0, 255, 0);
+}
+.Epaonnstui_message{
+    color: red;
 }

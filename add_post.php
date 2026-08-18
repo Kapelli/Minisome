@@ -1,3 +1,4 @@
+```php
 <?php
 
 include 'database.php';
@@ -12,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($author) || empty($content)) {
 
         $message = "Täytä kaikki kentät.";
+        $message_class = "Epaonnstui_message";
 
     } else {
 
@@ -20,8 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_query($conn, $sql)) {
             $message = "Julkaisu lisättiin onnistuneesti.";
+            $message_class = "Onnstui_message";
         } else {
             $message = "Julkaisun lisääminen epäonnistui.";
+            $message_class = "Epaonnstui_message";
         }
     }
 }
@@ -58,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h1>Lisää julkaisu</h1>
 
                 <?php if (!empty($message)) { ?>
-                    <div class="message">
+                    <div class="<?php echo $message_class; ?>">
                         <?php echo $message; ?>
                     </div>
                 <?php } ?>
@@ -97,3 +101,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+```

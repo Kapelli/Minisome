@@ -8,13 +8,34 @@ $sql = "SELECT * FROM posts WHERE id = $id";
 $result = mysqli_query($conn, $sql);
 
 $row = mysqli_fetch_assoc($result);
-var_dump($row);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    $author = trim($_POST["author"]);
+    $content = trim($_POST["content"]);
+
+    if (empty($author) || empty($content)) {
+
+        $message = "Täytä kaikki kentät.";
+
+    } else {
+
+        $sql = "UPDATE posts
+        SET author = '$author',
+            content = '$content'
+        WHERE id = $id";
+
+if (mysqli_query($conn, $sql)) {
+    $message = "Julkaisu päivitettiin onnistuneesti.";
+} else {
+    $message = "Julkaisun päivittäminen epäonnistui.";
+}
+    }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,8 +87,14 @@ var_dump($row);
                         placeholder="Mitä mielessä?"
                         ><?php echo htmlspecialchars($row['content']); ?></textarea>
 
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="<?php echo $row['id']; ?>"
+>
+
                     <button type="submit">
-                        Muokkaa
+                        Tallenna muutokset
                     </button>
 
                 </form>
@@ -77,7 +104,6 @@ var_dump($row);
         </div>
 
     </div>
-
 
 </body>
 </html>

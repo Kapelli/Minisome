@@ -58,26 +58,29 @@ $result = mysqli_query($conn, $sql);
             </div>
             <div class="postaukset">
 
-                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+<?php while ($row = mysqli_fetch_assoc($result)) { ?>
 
-                <div class="post">
+    <div class="post">
 
-                    <div class="tekija">
-                        <?php echo htmlspecialchars($row['author']); ?>
-                    </div>
+        <div class="tekija">
+            <?php echo htmlspecialchars($row['author']); ?>
+        </div>
 
-                    <div class="sisalto">
-                        <?php echo htmlspecialchars($row['content']); ?>
-                    </div>
+        <div class="sisalto">
+            <?php echo htmlspecialchars($row['content']); ?>
+        </div>
 
+        <div class="julkaisuaika">
+            <?php echo $row['created_at']; ?>
+        </div>
 
-                    <div class="julkaisuaika">
-                        <?php echo $row['created_at']; ?>
-                    </div>
+        <a href="edit_post.php?id=<?php echo $row['id']; ?>">
+            Muokkaa
+        </a>
 
-                </div>
+    </div>
 
-                <?php } ?>
+<?php } ?>
 
             </div>
         </div>

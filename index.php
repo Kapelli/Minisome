@@ -29,21 +29,16 @@ $sql = "SELECT * FROM posts";
 $result = mysqli_query($conn, $sql);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="fi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minisome</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <div class="layout">
-
         <aside>
             <img src="logo.png" alt="LOGO">
         </aside>
@@ -58,47 +53,38 @@ $result = mysqli_query($conn, $sql);
             </div>
             <div class="postaukset">
 
-<?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
 
-    <div class="post">
+                <div class="post">
+                    <div class="tekija-julkaisuaika">
+                        <div class="tekija">
+                            <?php echo htmlspecialchars($row['author']); ?>
+                        </div>
 
-        <div class="tekija">
-            <?php echo htmlspecialchars($row['author']); ?>
-        </div>
-
-        <div class="sisalto">
-            <?php echo htmlspecialchars($row['content']); ?>
-        </div>
-
-<div class="post-footer">
-    <div class="julkaisuaika">
-        <?php echo $row['created_at']; ?>
-    </div>
-
-    <div class="muokkaa">
-        <a href="edit_post.php?id=<?php echo $row['id']; ?>">
-            Muokkaa
-        </a>
-    </div>
-    </div>
-
-        <div class="poista">
-        <a href="delete_post.php?id=<?php echo $row['id']; ?>">
-            poista
-        </a>
-    </div>
-
-
-
-    </div>
-
-<?php } ?>
-
+                        <div class="julkaisuaika">
+                            <?php echo $row['created_at']; ?>
+                        </div>
+                    </div>
+                    <div class="sisalto">
+                        <?php echo htmlspecialchars($row['content']); ?>
+                    </div>
+                    <div class="post-footer">
+                        <div class="muokkaa">
+                            <a href="edit_post.php?id=<?php echo $row['id']; ?>">
+                                Muokkaa
+                            </a>
+                        </div>
+                        <div class="poista">
+                            <a href="delete_post.php?id=<?php echo $row['id']; ?>">
+                                Poista
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
         </div>
-
     </div>
-
 </body>
 
 </html>

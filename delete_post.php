@@ -11,30 +11,20 @@ $row = mysqli_fetch_assoc($result);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $author = trim($_POST["author"]);
-    $content = trim($_POST["content"]);
+    $id = $_POST["id"];
 
-    if (empty($author) || empty($content)) {
-        $message = "Täytä kaikki kentät.";
-        $message_class = "Epaonnstui_message";
+    $sql = "DELETE FROM posts
+            WHERE id = $id";
 
+    if (mysqli_query($conn, $sql)) {
+        $message = "Julkaisu poistettu onnistuneesti.";
+        $message_class = "Onnstui_message";
     } else {
-
-        $sql = "DELETE posts
-        SET author = '$author',
-            content = '$content'
-        WHERE id = $id";
-
-        if (mysqli_query($conn, $sql)) {
-            $message = "Julkaisu päivitettiin onnistuneesti.";
-            $message_class = "Onnstui_message";
-
-        } else {
-            $message = "Julkaisun päivittäminen epäonnistui.";
-            $message_class = "Epaonnstui_message";
-        }
+        $message = "Julkaisun poistaminen epäonnistui.";
+        $message_class = "Epaonnstui_message";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -42,70 +32,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Poista julkaisu</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-  <div class="layout">
 
-        <aside>
-            <img src="logo.png" alt="LOGO">
-        </aside>
+<div class="layout">
 
-        <div class="some">
+    <aside>
+        <img src="logo.png" alt="LOGO">
+    </aside>
 
-            <nav>
-                <a href="index.php">Sinulle</a>
-                <a href="add_post.php">Lisää Julkaisu</a>
-            </nav>
+    <div class="some">
 
-            <div class="add-post">
+        <nav>
+            <a href="index.php">Sinulle</a>
+            <a href="add_post.php">Lisää Julkaisu</a>
+        </nav>
 
-                <h1>Muokkaa julkaisu</h1>
-<?php if (!empty($message)) { ?>
-    <div class="<?php echo $message_class; ?>">
-        <?php echo $message; ?>
-    </div>
-<?php } ?>
+        <div class="add-post">
 
-                <form method="POST">
+            <h1>Poista julkaisu</h1>
 
-                    <label for="author">Nimimerkki</label>
+            <?php if (!empty($message)) { ?>
+                <div class="<?php echo $message_class; ?>">
+                    <?php echo $message; ?>
+                </div>
+            <?php } ?>
 
-                    <input
-                        type="text"
-                        name="author"
-                        id="author"
-                        placeholder="Nimimerkkisi"
-                        value="<?php echo htmlspecialchars($row['author']); ?>"
-                    >
+            <p>Haluatko varmasti poistaa tämän julkaisun?</p>
 
-                    <label for="content">Julkaisu</label>
+            <p>
+                <strong><?php echo htmlspecialchars($row['author']); ?></strong>
+            </p>
 
-                    <textarea
-                        name="content"
-                        id="content"
-                        placeholder="Mitä mielessä?"
-                        ><?php echo htmlspecialchars($row['content']); ?></textarea>
+            <p>
+                <?php echo htmlspecialchars($row['content']); ?>
+            </p>
 
-                        <input
-                            type="hidden"
-                            name="id"
-                            value="<?php echo $row['id']; ?>"
->
+            <form method="POST">
 
-                    <button type="submit">
-                        poista
-                    </button>
+                <input
+                    type="hidden"
+                    name="id"
+                    value="<?php echo $row['id']; ?>"
+                >
 
-                </form>
+                <button type="submit">
+                    Poista
+                </button>
 
-            </div>
+            </form>
 
         </div>
 
     </div>
+
+</div>
 
 </body>
 </html>

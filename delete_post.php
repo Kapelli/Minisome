@@ -2,7 +2,12 @@
 
 include 'database.php';
 
-$message = "";
+$id = $_GET["id"];
+
+$sql = "SELECT * FROM posts WHERE id = $id";
+$result = mysqli_query($conn, $sql);
+
+$row = mysqli_fetch_assoc($result);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -10,40 +15,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = trim($_POST["content"]);
 
     if (empty($author) || empty($content)) {
-
         $message = "Täytä kaikki kentät.";
         $message_class = "Epaonnstui_message";
 
     } else {
 
-        $sql = "INSERT INTO posts (author, content, created_at)
-                VALUES ('$author', '$content', NOW())";
+        $sql = "DELETE posts
+        SET author = '$author',
+            content = '$content'
+        WHERE id = $id";
 
         if (mysqli_query($conn, $sql)) {
-            $message = "Julkaisu lisättiin onnistuneesti.";
+            $message = "Julkaisu päivitettiin onnistuneesti.";
             $message_class = "Onnstui_message";
+
         } else {
-            $message = "Julkaisun lisääminen epäonnistui.";
+            $message = "Julkaisun päivittäminen epäonnistui.";
             $message_class = "Epaonnstui_message";
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="fi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lisää julkaisu - MiniSome</title>
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    <div class="layout">
+    
+  <div class="layout">
 
         <aside>
             <img src="logo.png" alt="LOGO">
@@ -58,13 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="add-post">
 
-                <h1>Lisää julkaisu</h1>
-
-                <?php if (!empty($message)) { ?>
-                    <div class="<?php echo $message_class; ?>">
-                        <?php echo $message; ?>
-                    </div>
-                <?php } ?>
+                <h1>Muokkaa julkaisu</h1>
+<?php if (!empty($message)) { ?>
+    <div class="<?php echo $message_class; ?>">
+        <?php echo $message; ?>
+    </div>
+<?php } ?>
 
                 <form method="POST">
 
@@ -75,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         name="author"
                         id="author"
                         placeholder="Nimimerkkisi"
+                        value="<?php echo htmlspecialchars($row['author']); ?>"
                     >
 
                     <label for="content">Julkaisu</label>
@@ -83,10 +87,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         name="content"
                         id="content"
                         placeholder="Mitä mielessä?"
-                    ></textarea>
+                        ><?php echo htmlspecialchars($row['content']); ?></textarea>
+
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="<?php echo $row['id']; ?>"
+>
 
                     <button type="submit">
-                        Julkaise
+                        poista
                     </button>
 
                 </form>
@@ -98,5 +108,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
 </body>
-
 </html>

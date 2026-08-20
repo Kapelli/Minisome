@@ -80,7 +80,14 @@ $result = mysqli_query($conn, $sql);
             Muokkaa
         </a>
     </div>
-</div>
+    </div>
+
+        <div class="poista">
+        <a href="delete_post.php?id=<?php echo $row['id']; ?>">
+            poista
+        </a>
+    </div>
+
 
 
     </div>
